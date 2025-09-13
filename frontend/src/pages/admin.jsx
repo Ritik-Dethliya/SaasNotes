@@ -1,0 +1,237 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+export default function Admin() {
+    const [user,setUser]=useState(null)
+  const [notes, setNotes] = useState([]);
+  const [editingNote, setEditingNote] = useState(null);
+  const [addNewNote,setAddNewNote]=useState(false)
+  const [form, setForm] = useState({ title: "", body: "" });
+  const [member, setMember] = useState({ email: "", password: "" });
+
+  // Fetch all notes
+  const fetchNotes = async () => {
+    try {
+      let token=localStorage.getItem("token")
+    let res=await axios.get("http://localhost:8000/notes/",
+        {
+            headers:{
+                Authorization:`Bearer ${token}`
+            },
+                body:{
+                   user
+                }
+        }
+            )
+            console.log(res.data)
+      setNotes(res.data);
+    } catch (err) {
+      console.error("Error fetching notes:", err);
+    }
+  };
+
+  useEffect(() => {
+    let userData=JSON.parse(localStorage.getItem("user"))
+    console.log(userData)
+    setUser(userData)
+    fetchNotes();
+  }, []);
+
+  // Handle edit click
+  const handleEditClick = (note) => {
+    setEditingNote(note._id);
+    setForm({ title: note.title, body: note.body });
+  };
+const handleDelete=async(note)=>{
+    let id=note._id
+     let token=localStorage.getItem("token")
+     try {
+    //     await axios.delete(`http://localhost:8000/notes/${id}`,{
+    //     headers:{
+    //         Authorization:`Bearer ${token}`
+    //     }
+    //   });
+    //   alert("Note Delete Sucessful")
+    //   fetchNotes()
+     } catch (error) {
+        console.log(error)
+     }    
+}
+  // Handle update
+  const handleUpdate = async (id) => {
+    try {
+        let token=localStorage.getItem("token")
+      await axios.put(`http://localhost:8000/notes/${id}`, form,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+      });
+      setEditingNote(null);
+      fetchNotes();
+    } catch (err) {
+      console.error("Error updating note:", err);
+    }
+  };
+
+  // Handle add member
+  const handleAddMember = async () => {
+    try {
+      await axios.post("http://localhost:8000/members", member);
+      setMember({ email: "", password: "" });
+      alert("Member added successfully");
+    } catch (err) {
+      console.error("Error adding member:", err);
+    }
+  };
+
+  const handleChange=(e)=>{
+        const {name,value}=e.target
+        setForm({...form,[name]:value})
+    }
+    const handleAddNote=async(e)=>{
+        e.preventDefault()
+        try {
+            let token=localStorage.getItem("token")
+            if(!token)return console.log("token not present")
+            let res=await axios.post("http://localhost:8000/notes/",form,
+                {
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+                }
+            )
+            console.log(res.data)
+            setForm({ title: "", body: "" })
+            setAddNewNote(false)
+            fetchNotes()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+  return (
+    <div className="admin-container">
+      <h1>Admin Dashboard</h1>
+
+      {/* Notes Section */}
+      <h2>Notes</h2>
+      <div className="notes-list">
+        {notes.map((note) => (
+          <div key={note._id} className="note-card">
+            {editingNote === note._id ? (
+              <div>
+                <input
+                  type="text"
+                  value={form.title}
+                  onChange={(e) => setForm({ ...form, title: e.target.value })}
+                />
+                <textarea
+                  value={form.body}
+                  onChange={(e) => setForm({ ...form, body: e.target.value })}
+                />
+                <button onClick={() => handleUpdate(note._id)}>Save</button>
+                <button onClick={() => setEditingNote(null)}>Cancel</button>
+              </div>
+            ) : (
+              <div>
+                <h3>{note.title}</h3>
+                <p>{note.body}</p>
+                <button onClick={() => handleEditClick(note)}>Edit</button>
+                <button onClick={(e) => {
+                    e.target.disabled = true
+                    handleDelete(note)
+                    }}>Delete
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Add Member Section */}
+      <h2>Add Member</h2>
+      <div className="member-form">
+        <input
+          type="email"
+          placeholder="Email"
+          value={member.email}
+          onChange={(e) => setMember({ ...member, email: e.target.value })}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={member.password}
+          onChange={(e) => setMember({ ...member, password: e.target.value })}
+        />
+        <button onClick={handleAddMember}>Add Member</button>
+      </div>
+      {
+                addNewNote && <div className="new-note-container">
+                    <form action="">
+                        <input 
+                            type="text" 
+                            name="title"
+                            value={form.title}
+                            onChange={handleChange}
+                        />
+                        <input 
+                            type="text" 
+                            name="body"
+                            value={form.body}
+                            onChange={handleChange}
+                        />
+                        <button type="submit" onClick={handleAddNote}>Add</button>
+                    </form>
+                </div>
+            }
+            <button onClick={()=>setAddNewNote(!addNewNote)}>
+                {addNewNote==true ? "Cancle":"Add New note"}
+            </button>
+
+      {/* Basic CSS */}
+      <style>{`
+        .admin-container {
+          width: 80%;
+          margin: auto;
+          padding: 20px;
+          font-family: Arial, sans-serif;
+        }
+        .notes-list {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 15px;
+        }
+        .note-card {
+          border: 1px solid #ccc;
+          padding: 15px;
+          border-radius: 8px;
+          background: #fafafa;
+        }
+        input, textarea {
+          display: block;
+          width: 100%;
+          margin: 5px 0;
+          padding: 8px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+        }
+        button {
+          margin-top: 5px;
+          padding: 6px 12px;
+          border: none;
+          background: #007bff;
+          color: white;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        button:hover {
+          background: #0056b3;
+        }
+        .member-form {
+          margin-top: 15px;
+        }
+      `}</style>
+    </div>
+  );
+}
+
+
