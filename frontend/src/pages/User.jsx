@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
-
+import '../styles/user.css'
 function User() {
     const [user,setUser]=useState(null)
     const [notes,setNotes]=useState([])
@@ -97,66 +97,73 @@ function User() {
         <>
             {user && 
                 <div className="user-details">
-                    <h3>{user.email}</h3>
-                    <h3>{user.role}</h3>
-                    <h3>{user.tenantId}</h3>
+                    <h1>Profile</h1>
+                    <br />
+                    <h3>Email: {user.email}</h3>
+                    <h3>Role:  {user.role}</h3>
+                    <h3>TenantId: {user.tenantId}</h3>
                 </div>
             }
+            <h2>Notes</h2>
             <div className="notes-list">
-        {notes.map((note) => (
-          <div key={note._id} className="note-card">
-            {editingNote === note._id ? (
-              <div>
-                <input
-                  type="text"
-                  value={form.title}
-                  onChange={(e) => setForm({ ...form, title: e.target.value })}
-                />
-                <textarea
-                  value={form.body}
-                  onChange={(e) => setForm({ ...form, body: e.target.value })}
-                />
-                <button onClick={() => handleUpdate(note._id)}>Save</button>
-                <button onClick={() => setEditingNote(null)}>Cancel</button>
-              </div>
-            ) : (
-              <div>
-                <h3>{note.title}</h3>
-                <p>{note.body}</p>
-                <button onClick={() => handleEditClick(note)}>Edit</button>
-                <button onClick={(e) => {
-                    e.target.disabled = true
-                    handleDelete(note)
-                    }}>Delete</button>
+                
+                {notes.map((note) => (
+                <div key={note._id} className="note-card">
+                    {editingNote === note._id ? (
+                    <div>
+                        <input
+                        type="text"
+                        value={form.title}
+                        onChange={(e) => setForm({ ...form, title: e.target.value })}
+                        />
+                        <textarea
+                        value={form.body}
+                        onChange={(e) => setForm({ ...form, body: e.target.value })}
+                        />
+                        <button onClick={() => handleUpdate(note._id)}>Save</button>
+                        <button onClick={() => setEditingNote(null)}>Cancel</button>
+                    </div>
+                    ) : (
+                    <div>
+                        <h3>{note.title}</h3>
+                        <p>{note.body}</p>
+                        <button onClick={() => handleEditClick(note)}>Edit</button>
+                        <button onClick={(e) => {
+                            e.target.disabled = true
+                            handleDelete(note)
+                            }}>Delete</button>
 
 
-              </div>
-            )}
-          </div>
-        ))}
+                    </div>
+                    )}
+                </div>
+                ))}
       </div>
             {
                 addNewNote && <div className="new-note-container">
-                    <form action="">
                         <input 
                             type="text" 
                             name="title"
                             value={form.title}
                             onChange={handleChange}
+                            placeholder="Enter title"
                         />
                         <input 
                             type="text" 
                             name="body"
                             value={form.body}
                             onChange={handleChange}
+                            placeholder="Enter message"
                         />
                         <button type="submit" onClick={handleAddNote}>Add</button>
-                    </form>
                 </div>
             }
-            <button onClick={()=>setAddNewNote(!addNewNote)}>
-                {addNewNote==true ? "Cancle":"Add New note"}
-            </button>
+            <div className="btn-container">
+                <button onClick={()=>setAddNewNote(!addNewNote)}>
+                    {addNewNote==true ? "Cancle":"Add New note"}
+                </button>
+            </div>
+            
         </>
     );
 }

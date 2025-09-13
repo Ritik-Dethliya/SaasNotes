@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import '../styles/admin.css'
 
 export default function Admin() {
     const [user,setUser]=useState(null)
@@ -110,7 +111,7 @@ const handleDelete=async(note)=>{
     }
   return (
     <div className="admin-container">
-      <h1>Admin Dashboard</h1>
+      <h1 className="heading">Admin Dashboard</h1>
 
       {/* Notes Section */}
       <h2>Notes</h2>
@@ -166,70 +167,30 @@ const handleDelete=async(note)=>{
       </div>
       {
                 addNewNote && <div className="new-note-container">
-                    <form action="">
+                  
                         <input 
                             type="text" 
                             name="title"
                             value={form.title}
                             onChange={handleChange}
+                            placeholder="Enter Title"
                         />
                         <input 
                             type="text" 
                             name="body"
                             value={form.body}
                             onChange={handleChange}
+                            placeholder="Enter Messaege"
                         />
                         <button type="submit" onClick={handleAddNote}>Add</button>
-                    </form>
+                  
                 </div>
             }
             <button onClick={()=>setAddNewNote(!addNewNote)}>
                 {addNewNote==true ? "Cancle":"Add New note"}
             </button>
 
-      {/* Basic CSS */}
-      <style>{`
-        .admin-container {
-          width: 80%;
-          margin: auto;
-          padding: 20px;
-          font-family: Arial, sans-serif;
-        }
-        .notes-list {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-          gap: 15px;
-        }
-        .note-card {
-          border: 1px solid #ccc;
-          padding: 15px;
-          border-radius: 8px;
-          background: #fafafa;
-        }
-        input, textarea {
-          display: block;
-          width: 100%;
-          margin: 5px 0;
-          padding: 8px;
-          border: 1px solid #ddd;
-          border-radius: 5px;
-        }
-        button {
-          margin-top: 5px;
-          padding: 6px 12px;
-          border: none;
-          background: #007bff;
-          color: white;
-          border-radius: 5px;
-          cursor: pointer;
-        }
-        button:hover {
-          background: #0056b3;
-        }
-        .member-form {
-          margin-top: 15px;
-        }
-      `}</style>
+      
     </div>
   );
 }

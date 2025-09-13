@@ -26,6 +26,7 @@ export default function Login() {
       return;
     }
     try {
+      console.log("loging...")
         let res=await axios.post("https://saasnotes.onrender.com/auth/login",{email,password})
         console.log(res.data)
         if(!res.data.token)return alert("token not Present")
@@ -39,7 +40,7 @@ export default function Login() {
         else{
             navigate('/user')
         }
-        
+        console.log("done")
     } catch (error) {
         console.log(error)
     }
