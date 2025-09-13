@@ -45,9 +45,10 @@ Other: Helmet, CORS, Morgan, Bcrypt
 
 🚀 Live Demo
 
-Frontend: Deployed on Vercel
+Frontend: Deployed on Vercel["https://saas-notes-three.vercel.app/"]
 
-Backend API: Deployed on Vercel
+Backend API: Deployed on Render 
+https://saasnotes.onrender.com
 
 (Replace # with your Vercel URLs)
 
