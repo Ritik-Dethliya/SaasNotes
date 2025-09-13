@@ -16,7 +16,7 @@ app.use(helmet());
 app.use(morgan("tiny"));
 const allowedOrigins = [
   "http://localhost:5173",            // local frontend
-  "https://saas-notes-three.vercel.app/" // vercel frontend
+  "https://saas-notes-three.vercel.app" // vercel frontend
 ];
 
 app.use(cors({
