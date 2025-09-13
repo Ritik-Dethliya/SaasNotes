@@ -11,11 +11,13 @@ const getTokenFromHeader = (h) => {
 export const authMiddleware = {
   required: async (req,res,next) => {
     try {
+      console.log("from req",req.headers.authorization)
       const token = getTokenFromHeader(req.headers.authorization);
-      if (!token) return res.status(401).json({error:"Unauthorized"});
+      console.log(token)
+      if (!token) return res.status(401).json({error:"Unauthorized token not present"});
       const payload = jwt.verify(token, process.env.JWT_SECRET);
       const user = await User.findById(payload.sub);
-      if (!user) return res.status(401).json({error:"Unauthorized"});
+      if (!user) return res.status(401).json({error:"Unauthorized token not match"});
       req.user = user; // includes tenantId
       next();
     } catch(e) {
