@@ -14,8 +14,21 @@ dotenv.config()
 const app = express();
 app.use(helmet());
 app.use(morgan("tiny"));
+const allowedOrigins = [
+  "http://localhost:5173",            // local frontend
+  "https://saas-notes-three.vercel.app/" // vercel frontend
+];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "*", // in prod limit to your frontend domain
+ origin: function (origin, callback) {
+    // allow requests with no origin (like Postman)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
   allowedHeaders: ["Content-Type","Authorization"]
 }));
