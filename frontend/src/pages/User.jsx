@@ -17,7 +17,7 @@ function User() {
     const getNotes=useCallback(async()=>{
         try {
             let token=localStorage.getItem("token")
-            let res=await axios.get("http://localhost:8000/notes/",
+            let res=await axios.get("https://saasnotes.onrender.com/notes/",
                 {
                     headers:{
                     Authorization:`Bearer ${token}`
@@ -42,7 +42,7 @@ function User() {
     const handleUpdate = async (id) => {
         try {
             let token=localStorage.getItem("token")
-        await axios.put(`http://localhost:8000/notes/${id}`, form,{
+        await axios.put(`https://saasnotes.onrender.com/notes/${id}`, form,{
             headers:{
                 Authorization:`Bearer ${token}`
             }
@@ -63,7 +63,7 @@ function User() {
         try {
             let token=localStorage.getItem("token")
             if(!token)return console.log("token not present")
-            let res=await axios.post("http://localhost:8000/notes/",form,
+            let res=await axios.post("https://saasnotes.onrender.com/notes/",form,
                 {
                     headers:{
                         Authorization:`Bearer ${token}`
@@ -82,7 +82,7 @@ function User() {
         let id=note._id
         let token=localStorage.getItem("token")
         try {
-            await axios.delete(`http://localhost:8000/notes/${id}`,{
+            await axios.delete(`https://saasnotes.onrender.com/notes/${id}`,{
             headers:{
                 Authorization:`Bearer ${token}`
             }

@@ -26,7 +26,7 @@ export default function Login() {
       return;
     }
     try {
-        let res=await axios.post("http://localhost:8000/auth/login",{email,password})
+        let res=await axios.post("https://saasnotes.onrender.com/auth/login",{email,password})
         console.log(res.data)
         if(!res.data.token)return alert("token not Present")
         localStorage.setItem("token",res.data.token)

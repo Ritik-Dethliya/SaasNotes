@@ -13,7 +13,7 @@ export default function Admin() {
   const fetchNotes = async () => {
     try {
       let token=localStorage.getItem("token")
-    let res=await axios.get("http://localhost:8000/notes/",
+    let res=await axios.get("https://saasnotes.onrender.com/notes/",
         {
             headers:{
                 Authorization:`Bearer ${token}`
@@ -46,13 +46,13 @@ const handleDelete=async(note)=>{
     let id=note._id
      let token=localStorage.getItem("token")
      try {
-    //     await axios.delete(`http://localhost:8000/notes/${id}`,{
-    //     headers:{
-    //         Authorization:`Bearer ${token}`
-    //     }
-    //   });
-    //   alert("Note Delete Sucessful")
-    //   fetchNotes()
+        await axios.delete(`https://saasnotes.onrender.com/notes/${id}`,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+      });
+      alert("Note Delete Sucessful")
+      fetchNotes()
      } catch (error) {
         console.log(error)
      }    
@@ -61,7 +61,7 @@ const handleDelete=async(note)=>{
   const handleUpdate = async (id) => {
     try {
         let token=localStorage.getItem("token")
-      await axios.put(`http://localhost:8000/notes/${id}`, form,{
+      await axios.put(`https://saasnotes.onrender.com/notes/${id}`, form,{
         headers:{
             Authorization:`Bearer ${token}`
         }
@@ -76,7 +76,7 @@ const handleDelete=async(note)=>{
   // Handle add member
   const handleAddMember = async () => {
     try {
-      await axios.post("http://localhost:8000/members", member);
+      await axios.post("https://saasnotes.onrender.com/members", member);
       setMember({ email: "", password: "" });
       alert("Member added successfully");
     } catch (err) {
@@ -93,7 +93,7 @@ const handleDelete=async(note)=>{
         try {
             let token=localStorage.getItem("token")
             if(!token)return console.log("token not present")
-            let res=await axios.post("http://localhost:8000/notes/",form,
+            let res=await axios.post("https://saasnotes.onrender.com/notes/",form,
                 {
                     headers:{
                         Authorization:`Bearer ${token}`
