@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
-
+import '../styles/upgrade.css'
+import Navbar from "../components/Navbar";
 function Upgrade() {
     const {slug}=useParams()
     console.log(slug)
@@ -19,11 +20,35 @@ function Upgrade() {
     }
     return (  
         <>
-            <div className="updrade-container">
-                <h1>Upgrade Notes Limit</h1>
+        <Navbar/>
+        <div className="updrade-container">
+                {/* <h1>Upgrade Notes Limit</h1>
                 <h3>200$</h3>
-                <button onClick={handleCheckout}>Checkout</button>
+                <button onClick={handleCheckout}>Checkout</button> */}
+
+            <div className="main-container">
+                    <p>
+                        Welcome to the upgrade
+                        <br />
+                        More features. More power. More you
+                        <br />
+                        Upgrade to unlock unlimited notes
+                    </p>
+                    
+                    <div className="btn">
+                        <button 
+                            onClick={handleCheckout}
+                            className="checkout-btn"
+                        >
+                            Checkout
+                        </button> 
+                    </div>
+                    
             </div>
+            <div className="rotate-container">
+                <img src="https://media.istockphoto.com/id/1053291038/vector/business-finance-bar-profit-vector-illustration.jpg?s=612x612&w=0&k=20&c=r0axxeuEroKcQO7lhVziB0-AFuRTFfGUfnrfF1euzB4=" alt="" />
+            </div>
+        </div>
         </>
     );
 }
