@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 
 function Home() {
-    // const [user,setUser]=useState(null)
+   
     const {user}=useContext(AuthContext)
     const [notes,setNotes]=useState([])
     const [editingNote, setEditingNote] = useState(null);

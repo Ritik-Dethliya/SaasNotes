@@ -12,7 +12,6 @@ export default function Admin() {
   const [form, setForm] = useState({ title: "", body: "" });
   const [member, setMember] = useState({ email: "", password: "" });
   const [update,setUpdate]=useState(false)
-  // Fetch all notes
   const fetchNotes = async () => {
     try {
       let token=localStorage.getItem("token")
@@ -40,7 +39,6 @@ export default function Admin() {
     fetchNotes();
   }, []);
 
-  // Handle edit click
   const handleEditClick = (note) => {
     setEditingNote(note._id);
     setForm({ title: note.title, body: note.body });
@@ -60,7 +58,7 @@ const handleDelete=async(note)=>{
         console.log(error)
      }    
 }
-  // Handle update
+
   const handleUpdate = async (id) => {
     try {
         let token=localStorage.getItem("token")
@@ -76,7 +74,7 @@ const handleDelete=async(note)=>{
     }
   };
 
-  // Handle add member
+  
   const handleAddMember = async () => {
     try {
       await axios.post("https://saasnotes.onrender.com/members", member);
@@ -118,7 +116,7 @@ const handleDelete=async(note)=>{
     <div className="admin-container">
       <h1 className="heading">Admin Dashboard</h1>
 
-      {/* Notes Section */}
+    
       <h2>Notes</h2>
       <div className="notes-list">
         {notes.map((note) => (
@@ -153,7 +151,7 @@ const handleDelete=async(note)=>{
         ))}
       </div>
 
-      {/* Add Member Section */}
+      
       <h2>Add Member</h2>
       <div className="member-form">
         <input

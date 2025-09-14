@@ -12,7 +12,7 @@ function Member() {
 
     const getMembers=async()=>{
         let token=localStorage.getItem("token")
-        let res=await axios.get(`http://localhost:8000/tenants/${slug}/members`,
+        let res=await axios.get(`https://saasnotes.onrender.com/tenants/${slug}/members`,
             {
                 headers:{
                     Authorization:`Bearer ${token}`

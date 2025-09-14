@@ -34,7 +34,7 @@ function Notes() {
       console.error("Error fetching notes:", err);
     }
   };
-  // Handle edit click
+
   const handleEditClick = (note) => {
     setEditingNote(note._id);
     setForm({ title: note.title, body: note.body });
@@ -54,7 +54,7 @@ const handleDelete=async(note)=>{
         console.log(error)
      }    
 }
-  // Handle update
+
   const handleUpdate = async (id) => {
     try {
         let token=localStorage.getItem("token")

@@ -22,10 +22,6 @@ function Upgrade() {
         <>
         <Navbar/>
         <div className="updrade-container">
-                {/* <h1>Upgrade Notes Limit</h1>
-                <h3>200$</h3>
-                <button onClick={handleCheckout}>Checkout</button> */}
-
             <div className="main-container">
                     <p>
                         Welcome to the upgrade
