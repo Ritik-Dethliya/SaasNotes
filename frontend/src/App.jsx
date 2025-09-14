@@ -20,7 +20,7 @@ export default function App() {
             <Route path="/user" element={<User/>} />
             <Route path="/admin" element={<Admin/>} />
 
-            <Route path="/upgrade" element={<Upgrade />} />
+            <Route path="/upgrade/:slug" element={<Upgrade />} />
             {/* <Route path="*" element={<NotFound />} /> */}
           </Routes>
         </BrowserRouter>

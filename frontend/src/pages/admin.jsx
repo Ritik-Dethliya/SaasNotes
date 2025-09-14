@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {useNavigate} from 'react-router-dom'
 import '../styles/admin.css'
 
 export default function Admin() {
-    const [user,setUser]=useState(null)
+  const navigate=useNavigate()
+  const [user,setUser]=useState(null)
   const [notes, setNotes] = useState([]);
   const [editingNote, setEditingNote] = useState(null);
   const [addNewNote,setAddNewNote]=useState(false)
   const [form, setForm] = useState({ title: "", body: "" });
   const [member, setMember] = useState({ email: "", password: "" });
-
+  const [update,setUpdate]=useState(false)
   // Fetch all notes
   const fetchNotes = async () => {
     try {
@@ -106,7 +108,10 @@ const handleDelete=async(note)=>{
             setAddNewNote(false)
             fetchNotes()
         } catch (error) {
-            console.log(error)
+          if(error.status==403){
+            navigate(`/upgrade/${user.tenantId}`)
+          }
+            console.log(error.status)
         }
     }
   return (
